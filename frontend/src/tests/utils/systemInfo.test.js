@@ -16,7 +16,6 @@ let axiosMock;
 
 describe("utils/systemInfo tests", () => {
   describe("useSystemInfo tests", () => {
-
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
       axiosMock.reset();

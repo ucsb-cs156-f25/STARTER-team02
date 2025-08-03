@@ -15,11 +15,9 @@ import AxiosMockAdapter from "axios-mock-adapter";
 jest.mock("react-router-dom");
 const { MemoryRouter } = jest.requireActual("react-router-dom");
 
-
 let axiosMock;
 describe("utils/currentUser tests", () => {
   describe("useCurrentUser tests", () => {
-
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
     });
@@ -186,7 +184,6 @@ describe("utils/currentUser tests", () => {
     });
   });
   describe("useLogout tests", () => {
-
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
     });
