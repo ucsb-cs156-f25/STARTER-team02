@@ -31,7 +31,7 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <Row className="text-left">
-        <Inspector data={currentUser.root} />
+        <Inspector data={currentUser} />
       </Row>
     </BasicLayout>
   );
