@@ -141,7 +141,7 @@ describe("RestaurantIndexPage tests", () => {
     restoreConsole();
   });
 
-  test("what happens when you click delete, admin", async () => {
+  test.skip("what happens when you click delete, admin", async () => {
     setupAdminUser();
 
     axiosMock

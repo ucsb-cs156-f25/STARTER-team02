@@ -15,8 +15,15 @@ import AxiosMockAdapter from "axios-mock-adapter";
 jest.mock("react-router-dom");
 const { MemoryRouter } = jest.requireActual("react-router-dom");
 
+
+let axiosMock;
 describe("utils/currentUser tests", () => {
   describe("useCurrentUser tests", () => {
+
+    beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
+    });
+
     test("useCurrentUser retrieves initial data", async () => {
       const queryClient = new QueryClient();
       const wrapper = ({ children }) => (
@@ -25,7 +32,6 @@ describe("utils/currentUser tests", () => {
         </QueryClientProvider>
       );
 
-      const axiosMock = new AxiosMockAdapter(axios);
       axiosMock.onGet("/api/currentUser").timeoutOnce();
       axiosMock
         .onGet("/api/systemInfo")
@@ -35,7 +41,7 @@ describe("utils/currentUser tests", () => {
 
       const { result } = renderHook(() => useCurrentUser(), { wrapper });
       await waitFor(() =>
-        expect(queryClient.getQueryState("current user").status).toBe(
+        expect(queryClient.getQueryState(["current user"]).status).toBe(
           "success",
         ),
       );
@@ -46,7 +52,7 @@ describe("utils/currentUser tests", () => {
         initialData: true,
       });
 
-      const queryState = queryClient.getQueryState("current user");
+      const queryState = queryClient.getQueryState(["current user"]);
       expect(queryState).toBeDefined();
 
       queryClient.clear();
@@ -76,9 +82,9 @@ describe("utils/currentUser tests", () => {
       const { result } = renderHook(() => useCurrentUser(), { wrapper });
 
       await waitFor(() =>
-        expect(queryClient.getQueryState("current user").status).toBe(
-          "success",
-        ),
+        expect(
+          queryClient.getQueryState(["current user"]).dataUpdateCount,
+        ).toBe(1),
       );
 
       expect(result.current).toEqual(currentUserFixtures.userOnly);
@@ -100,7 +106,7 @@ describe("utils/currentUser tests", () => {
       const { result } = renderHook(() => useCurrentUser(), { wrapper });
 
       await waitFor(() =>
-        expect(queryClient.getQueryState("current user").status).toBe(
+        expect(queryClient.getQueryState(["current user"]).status).toBe(
           "success",
         ),
       );
@@ -113,6 +119,35 @@ describe("utils/currentUser tests", () => {
         initialData: true,
         loggedIn: false,
         root: null,
+      });
+      queryClient.clear();
+    });
+
+    test("useCurrentUser when API returns 403 (not logged in)", async () => {
+      const queryClient = new QueryClient();
+      const wrapper = ({ children }) => (
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      );
+
+      const axiosMock = new AxiosMockAdapter(axios);
+      axiosMock.onGet("/api/currentUser").reply(403);
+
+      const restoreConsole = mockConsole();
+      const { result } = renderHook(() => useCurrentUser(), { wrapper });
+
+      await waitFor(() =>
+        expect(
+          queryClient.getQueryState(["current user"]).dataUpdateCount,
+        ).toBe(1),
+      );
+      expect(console.error).not.toHaveBeenCalled();
+      restoreConsole();
+
+      expect(result.current).toEqual({
+        loggedIn: false,
+        root: {},
       });
       queryClient.clear();
     });
@@ -151,6 +186,10 @@ describe("utils/currentUser tests", () => {
     });
   });
   describe("useLogout tests", () => {
+
+    beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
+    });
     test("useLogout", async () => {
       const queryClient = new QueryClient();
       const wrapper = ({ children }) => (
@@ -176,8 +215,8 @@ describe("utils/currentUser tests", () => {
       await waitFor(() => expect(navigateSpy).toHaveBeenCalledWith("/"));
 
       await waitFor(() =>
-        expect(resetQueriesSpy).toHaveBeenCalledWith("current user", {
-          exact: true,
+        expect(resetQueriesSpy).toHaveBeenCalledWith({
+          queryKey: ["current user"],
         }),
       );
 

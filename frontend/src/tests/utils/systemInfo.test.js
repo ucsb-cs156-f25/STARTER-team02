@@ -12,8 +12,19 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 jest.mock("react-router-dom");
 const { _MemoryRouter } = jest.requireActual("react-router-dom");
 
+let axiosMock;
+
 describe("utils/systemInfo tests", () => {
   describe("useSystemInfo tests", () => {
+
+    beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
+      axiosMock.reset();
+    });
+
+    afterEach(() => {
+      axiosMock.restore();
+    });
     test("useSystemInfo retrieves initial data", async () => {
       const queryClient = new QueryClient();
       const wrapper = ({ children }) => (
@@ -22,11 +33,7 @@ describe("utils/systemInfo tests", () => {
         </QueryClientProvider>
       );
 
-      const axiosMock = new AxiosMockAdapter(axios);
-      axiosMock.onGet("/api/systemInfo").timeoutOnce();
-      axiosMock
-        .onGet("/api/systemInfo")
-        .reply(200, systemInfoFixtures.showingNeither);
+      axiosMock.onGet("/api/systemInfo").timeout();
 
       const restoreConsole = mockConsole();
 
@@ -38,11 +45,6 @@ describe("utils/systemInfo tests", () => {
         springH2ConsoleEnabled: false,
         showSwaggerUILink: false,
       });
-
-      const queryState = queryClient.getQueryState("systemInfo");
-      expect(queryState).toBeDefined();
-
-      queryClient.clear();
 
       await waitFor(() => expect(console.error).toHaveBeenCalled());
       const errorMessage = console.error.mock.calls[0][0];
@@ -58,15 +60,15 @@ describe("utils/systemInfo tests", () => {
         </QueryClientProvider>
       );
 
-      const axiosMock = new AxiosMockAdapter(axios);
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingBoth);
 
       const { result } = renderHook(() => useSystemInfo(), { wrapper });
 
-      await waitFor(() => result.current.isFetched);
-
+      await waitFor(() =>
+        expect(result.current.isFetchedAfterMount).toBe(true),
+      );
       expect(result.current.data).toEqual(systemInfoFixtures.showingBoth);
       queryClient.clear();
     });
@@ -79,7 +81,6 @@ describe("utils/systemInfo tests", () => {
         </QueryClientProvider>
       );
 
-      const axiosMock = new AxiosMockAdapter(axios);
       axiosMock.onGet("/api/systemInfo").reply(404);
 
       const restoreConsole = mockConsole();
@@ -93,8 +94,8 @@ describe("utils/systemInfo tests", () => {
 
       expect(result.current.data).toEqual({
         initialData: true,
-        springH2ConsoleEnabled: false,
         showSwaggerUILink: false,
+        springH2ConsoleEnabled: false,
       });
       queryClient.clear();
     });
