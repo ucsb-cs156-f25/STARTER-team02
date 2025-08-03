@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import RestaurantForm from "main/components/Restaurants/RestaurantForm";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
 
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const mockedNavigate = jest.fn();
 
