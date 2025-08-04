@@ -166,9 +166,9 @@ describe("utils/currentUser tests", () => {
       const { result } = renderHook(() => useCurrentUser(), { wrapper });
 
       await waitFor(() =>
-        expect(queryClient.getQueryState("current user").status).toBe(
-          "success",
-        ),
+        expect(
+          queryClient.getQueryState(["current user"]).dataUpdateCount,
+        ).toBe(1),
       );
       expect(console.error).toHaveBeenCalled();
       const errorMessage = console.error.mock.calls[0][0];

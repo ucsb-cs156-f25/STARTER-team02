@@ -141,7 +141,7 @@ describe("RestaurantIndexPage tests", () => {
     restoreConsole();
   });
 
-  test.skip("what happens when you click delete, admin", async () => {
+  test("what happens when you click delete, admin", async () => {
     setupAdminUser();
 
     axiosMock
@@ -169,7 +169,7 @@ describe("RestaurantIndexPage tests", () => {
       "2",
     );
 
-    const deleteButton = screen.getByTestId(
+    const deleteButton = await screen.findByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
