@@ -5,7 +5,7 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 
 import { Inspector } from "react-inspector";
 const ProfilePage = () => {
-  const { data: currentUser } = useCurrentUser();
+  const currentUser = useCurrentUser();
 
   if (!currentUser.loggedIn) {
     return <p>Not logged in.</p>;
@@ -31,7 +31,7 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <Row className="text-left">
-        <Inspector data={currentUser.root} />
+        <Inspector data={currentUser} />
       </Row>
     </BasicLayout>
   );
