@@ -45,6 +45,10 @@ describe("utils/systemInfo tests", () => {
         showSwaggerUILink: false,
       });
 
+      const queryState = queryClient.getQueryState(["systemInfo"]);
+      expect(queryState).toBeDefined();
+      queryClient.clear();
+
       await waitFor(() => expect(console.error).toHaveBeenCalled());
       const errorMessage = console.error.mock.calls[0][0];
       expect(errorMessage).toMatch(/Error invoking axios.get:/);
