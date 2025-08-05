@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor, act } from "@testing-library/react";
 
 import axios from "axios";
@@ -66,6 +66,50 @@ describe("utils/useBackend tests", () => {
       expect(errorMessage).toMatch(
         "Error communicating with backend via GET on /api/admin/users",
       );
+      expect(mockToast).toHaveBeenCalledWith(
+        "Error communicating with backend via GET on /api/admin/users",
+      );
+    });
+    test("useBackend handles error correctly with suppressed toast", async () => {
+      // See: https://react-query.tanstack.com/guides/testing#turn-off-retries
+      const queryClient = new QueryClient({
+        defaultOptions: {
+          queries: {
+            // ✅ turns retries off
+            retry: false,
+          },
+        },
+      });
+      const wrapper = ({ children }) => (
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      );
+
+      var axiosMock = new AxiosMockAdapter(axios);
+
+      axiosMock.onGet("/api/admin/users").reply(404, {});
+
+      const { result } = renderHook(
+        () =>
+          useBackend(
+            ["/api/admin/users"],
+            { method: "GET", url: "/api/admin/users" },
+            ["initialData"],
+            true,
+          ),
+        { wrapper },
+      );
+
+      await waitFor(() => result.current.isError);
+
+      expect(result.current.data).toEqual(["initialData"]);
+      await waitFor(() => expect(console.error).toHaveBeenCalled());
+      const errorMessage = console.error.mock.calls[0][0];
+      expect(errorMessage).toMatch(
+        "Error communicating with backend via GET on /api/admin/users",
+      );
+      expect(mockToast).not.toHaveBeenCalled();
     });
   });
   describe("utils/useBackend useBackendMutation tests", () => {
@@ -190,22 +234,16 @@ describe("utils/useBackend tests", () => {
       );
 
       await waitFor(() => expect(mockToast).toHaveBeenCalled());
-      expect(mockToast).toHaveBeenCalledTimes(2);
-      expect(mockToast).toHaveBeenCalledWith(
-        "Axios Error: Error: Request failed with status code 404",
-      );
+      expect(mockToast).toHaveBeenCalledTimes(1);
       expect(mockToast).toHaveBeenCalledWith(
         "Error: Request failed with status code 404",
       );
 
-      expect(console.error).toHaveBeenCalledTimes(3);
-      const errorMessage0 = console.error.mock.calls[0][0];
-      expect(errorMessage0).toMatch(/Axios Error:/);
-      const errorMessage1 = console.error.mock.calls[1][0];
-      expect(errorMessage1.message).toMatch(
-        /Request failed with status code 404/,
-      );
-      const errorMessage2 = console.error.mock.calls[2][0];
+      console.log(console.error.mock.calls);
+      expect(console.error).toHaveBeenCalledTimes(1);
+      const errorMessage1 = console.error.mock.calls[0][1];
+      expect(errorMessage1).toMatch(/Request failed with status code 404/);
+      const errorMessage2 = console.error.mock.calls[0][0];
       expect(errorMessage2).toMatch(/onError from mutation.mutate called!/);
     });
   });

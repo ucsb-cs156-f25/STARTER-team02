@@ -1,6 +1,6 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router-dom";
 import mockConsole from "jest-mock-console";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
@@ -169,7 +169,7 @@ describe("RestaurantIndexPage tests", () => {
       "2",
     );
 
-    const deleteButton = screen.getByTestId(
+    const deleteButton = await screen.findByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
