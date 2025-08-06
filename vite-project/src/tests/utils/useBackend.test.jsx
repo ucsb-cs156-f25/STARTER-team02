@@ -5,6 +5,8 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 
+import mockConsole from "tests/testutils/mockConsole";
+
 vi.mock("react-router");
 
 const mockToast = vi.fn();
@@ -16,15 +18,15 @@ vi.mock("react-toastify", async (importOriginal) => {
   };
 });
 
-
+let restoreConsole;
 describe("utils/useBackend tests", () => {
   beforeEach(() => {
-    jest.spyOn(console, "error");
-    console.error.mockImplementation(() => null);
+    restoreConsole = mockConsole();
   });
 
   afterEach(() => {
-    console.error.mockRestore();
+    restoreConsole();
+    mockToast.mockClear();
   });
 
   describe("utils/useBackend useBackend tests", () => {
