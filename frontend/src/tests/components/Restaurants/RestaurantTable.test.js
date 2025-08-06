@@ -2,15 +2,15 @@ import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
 import RestaurantTable from "main/components/Restaurants/RestaurantTable";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mockedNavigate = jest.fn();
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
   useNavigate: () => mockedNavigate,
 }));
 

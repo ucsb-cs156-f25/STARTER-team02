@@ -6,7 +6,7 @@ import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
 } from "main/utils/restaurantUtils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/currentUser";
 
 export default function RestaurantTable({
