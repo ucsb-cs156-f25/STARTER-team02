@@ -21,12 +21,12 @@ describe("OurTable tests", () => {
 
   const columns = [
     {
-      Header: "Column 1",
-      accessor: "col1", // accessor is the "key" in the data
+      header: "Column 1",
+      accessorKey: "col1", // accessor is the "key" in the data
     },
     {
-      Header: "Column 2",
-      accessor: "col2",
+      header: "Column 2",
+      accessorKey: "col2",
     },
     ButtonColumn("Click", "primary", clickMeCallback, "testId"),
   ];

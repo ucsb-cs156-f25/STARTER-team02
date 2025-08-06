@@ -1,19 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export function useCurrentUser() {
-  let rolesList = ["ERROR_GETTING_ROLES"];
   const queryResults = useQuery({
     queryKey: ["current user"],
     queryFn: async () => {
       try {
         const response = await axios.get("/api/currentUser");
-        try {
-          rolesList = response.data.roles.map((r) => r.authority);
-        } catch (e) {
-          console.error("Error getting roles: ", e);
+        if (response.data == null) {
+          return { loggedIn: false, root: {} };
         }
+        if (! (response.data instanceof Object) || ! ("roles" in response.data)) {
+          return { loggedIn: false, root: response.data };
+        }
+        let rolesList = response.data.roles.map((r) => r.authority);
         response.data = { ...response.data, rolesList: rolesList };
         return { loggedIn: true, root: response.data };
       } catch (e) {
