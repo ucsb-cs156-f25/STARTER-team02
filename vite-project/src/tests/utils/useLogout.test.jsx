@@ -1,15 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {  useLogout } from "main/utils/useLogout";
+import { useLogout } from "main/utils/useLogout";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { vi } from "vitest";
 
-
 // The mock MUST be at the top level of the file
 const navigateSpy = vi.fn();
-vi.mock('react-router-dom', async (importOriginal) => {
+vi.mock('react-router', async (importOriginal) => { // <-- Corrected module name here
   const actual = await importOriginal();
   return {
     ...actual,
@@ -17,9 +16,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
-let axiosMock;
 describe("useLogout tests", () => {
-
   let queryClient;
   let axiosMock;
   let resetQueriesSpy;
@@ -45,18 +42,14 @@ describe("useLogout tests", () => {
       </QueryClientProvider>
     );
 
-    // Render the hook
     const { result } = renderHook(() => useLogout(), { wrapper });
 
-    // Use a guard to ensure result.current is not null before proceeding
     if (!result.current) {
       console.error("Hook failed to render, result.current is null.");
-      // This assertion will make the test fail explicitly if the hook is null
       expect(result.current).not.toBeNull();
       return;
     }
 
-    // Now it's safe to call mutate
     act(() => {
       result.current.mutate();
     });
@@ -65,7 +58,6 @@ describe("useLogout tests", () => {
 
     expect(axiosMock.history.post.length).toBe(1);
     expect(resetQueriesSpy).toHaveBeenCalledWith({ queryKey: ['current user'] });
+    expect(navigateSpy).toHaveBeenCalledWith('/'); // Your assertion will now pass
   });
 });
-
-

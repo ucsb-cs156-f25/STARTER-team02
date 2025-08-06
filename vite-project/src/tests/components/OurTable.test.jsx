@@ -1,6 +1,7 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { createColumnHelper } from '@tanstack/react-table';
+import { expect } from "vitest";
 
 describe("OurTable tests", () => {
   const threeRows = [
@@ -66,10 +67,12 @@ describe("OurTable tests", () => {
   test("click on a header and a sort caret should appear", async () => {
     render(
       <OurTable columns={columns} data={threeRows} testid={"sampleTestId"} />,
-    );
+    );  
 
     await screen.findByTestId("sampleTestId-header-col1-sort-header");
     const col1Header = screen.getByTestId("sampleTestId-header-col1-sort-header");
+
+    expect(col1Header).toHaveStyle("cursor: pointer");
 
     const col1SortCarets = screen.getByTestId(
       "sampleTestId-header-col1-sort-carets",

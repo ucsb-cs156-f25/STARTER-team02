@@ -15,7 +15,6 @@ export default function AppNavbar({
   return (
     <>
       {(currentUrl.startsWith("http://localhost:3000") ||
-        currentUrl.startsWith("http://localhost:5173") ||
         currentUrl.startsWith("http://127.0.0.1:3000")) && (
           <AppNavbarLocalhost url={currentUrl} />
         )}
