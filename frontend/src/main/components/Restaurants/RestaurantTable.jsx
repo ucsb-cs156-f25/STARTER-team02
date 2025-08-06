@@ -17,7 +17,7 @@ export default function RestaurantTable({
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/restaurants/edit/${cell.row.values.id}`);
+    navigate(`/restaurants/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -36,17 +36,17 @@ export default function RestaurantTable({
 
   const columns = [
     {
-      Header: "id",
-      accessor: "id", // accessor is the "key" in the data
+      header: "id",
+      accessorKey: "id", // accessor is the "key" in the data
     },
 
     {
-      Header: "Name",
-      accessor: "name",
+      header: "Name",
+      accessorKey: "name",
     },
     {
-      Header: "Description",
-      accessor: "description",
+      header: "Description",
+      accessorKey: "description",
     },
   ];
 
