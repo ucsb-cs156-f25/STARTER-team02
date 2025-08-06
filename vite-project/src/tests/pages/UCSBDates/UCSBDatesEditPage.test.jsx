@@ -9,13 +9,14 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 import mockConsole from "tests/testutils/mockConsole";
+import { beforeEach, afterEach } from "vitest";
 
 const mockToast = vi.fn();
 vi.mock("react-toastify", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,
-    toast: vi.fn((x) => mockToast(x)), 
+    toast: vi.fn((x) => mockToast(x)),
   };
 });
 
@@ -35,13 +36,12 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
+let axiosMock;
 describe("UCSBDatesEditPage tests", () => {
   describe("when the backend doesn't return data", () => {
-    const axiosMock = new AxiosMockAdapter(axios);
 
     beforeEach(() => {
-      axiosMock.reset();
-      axiosMock.resetHistory();
+      axiosMock = new AxiosMockAdapter(axios);
       axiosMock
         .onGet("/api/currentUser")
         .reply(200, apiCurrentUserFixtures.userOnly);
@@ -49,6 +49,13 @@ describe("UCSBDatesEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock.onGet("/api/ucsbdates", { params: { id: 17 } }).timeout();
+    });
+
+    afterEach(() => {
+      mockToast.mockClear();
+      mockNavigate.mockClear();
+      axiosMock.restore();
+      axiosMock.resetHistory();
     });
 
     const queryClient = new QueryClient();
@@ -62,6 +69,8 @@ describe("UCSBDatesEditPage tests", () => {
           </MemoryRouter>
         </QueryClientProvider>,
       );
+
+      await screen.findByText(/Welcome/);
       await screen.findByText("Edit UCSBDate");
       expect(
         screen.queryByTestId("UCSBDateForm-quarterYYYYQ"),
@@ -71,9 +80,9 @@ describe("UCSBDatesEditPage tests", () => {
   });
 
   describe("tests where backend is working normally", () => {
-    const axiosMock = new AxiosMockAdapter(axios);
 
     beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
       axiosMock.reset();
       axiosMock.resetHistory();
       axiosMock
@@ -96,6 +105,13 @@ describe("UCSBDatesEditPage tests", () => {
       });
     });
 
+    afterEach(() => {
+      mockToast.mockClear();
+      mockNavigate.mockClear();
+      axiosMock.restore();
+      axiosMock.resetHistory();
+    });
+
     const queryClient = new QueryClient();
     test("renders without crashing", async () => {
       render(
@@ -105,7 +121,7 @@ describe("UCSBDatesEditPage tests", () => {
           </MemoryRouter>
         </QueryClientProvider>,
       );
-
+      await screen.findByText(/Welcome/);
       await screen.findByTestId("UCSBDateForm-quarterYYYYQ");
     });
 
