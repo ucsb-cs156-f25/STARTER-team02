@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";

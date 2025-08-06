@@ -1,7 +1,7 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import UCSBDateForm from "main/components/UCSBDates/UCSBDateForm";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 

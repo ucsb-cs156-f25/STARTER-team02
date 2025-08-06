@@ -2,8 +2,8 @@ import { Row, Col } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import { useCurrentUser } from "main/utils/currentUser";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import JsonView from "@uiw/react-json-view";
 
-import { Inspector } from "react-inspector";
 const ProfilePage = () => {
   const currentUser = useCurrentUser();
 
@@ -31,7 +31,7 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <Row className="text-left">
-        <Inspector data={currentUser} />
+        <JsonView value={currentUser} />
       </Row>
     </BasicLayout>
   );
