@@ -9,7 +9,6 @@ import {
 import { Button } from "react-bootstrap";
 import SortCaret from "main/components/Common/SortCaret";
 
-
 function OurTable({ data, columns, testid = "testid" }) {
   const memoizedData = useMemo(() => data, [data]);
   const memoizedColumns = useMemo(() => columns, [columns]);

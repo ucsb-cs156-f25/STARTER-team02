@@ -1,34 +1,8 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
-import OurTable, {
-  ButtonColumn,
-  convertOldStyleColumnsToNewStyle,
-} from "main/components/OurTable";
+import OurTable, { ButtonColumn } from "main/components/OurTable";
 import ourTableFixtures from "fixtures/ourTableFixtures";
 
 describe("OurTable tests", () => {
-  describe("OurTable helper tests", () => {
-    test("add id when it doesn't exist", () => {
-      const columns = [
-        {
-          header: "Column 1",
-          accessorKey: "col1", // accessor is the "key" in the data
-        },
-      ];
-
-      console.log("columns", columns);
-      const newColumns = convertOldStyleColumnsToNewStyle(columns);
-      console.log("newColumns", newColumns);
-      const expected = [
-        {
-          id: "col1",
-          header: "Column 1",
-          accessorKey: "col1",
-        },
-      ];
-
-      expect(newColumns).toEqual(expected);
-    });
-  });
   describe("OurTable component tests", () => {
     const threeRows = [
       {
