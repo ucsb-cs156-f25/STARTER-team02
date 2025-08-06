@@ -7,7 +7,7 @@ import {
   onDeleteSuccess,
 } from "main/utils/restaurantUtils";
 import { useNavigate } from "react-router";
-import { hasRole } from "main/utils/currentUser";
+import { hasRole } from "main/utils/useCurrentUser";
 
 export default function RestaurantTable({
   restaurants,

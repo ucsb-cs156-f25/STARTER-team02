@@ -3,7 +3,7 @@ import { useBackend } from "main/utils/useBackend";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import RestaurantTable from "main/components/Restaurants/RestaurantTable";
-import { useCurrentUser, hasRole } from "main/utils/currentUser";
+import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 import { Button } from "react-bootstrap";
 
 export default function RestaurantIndexPage() {

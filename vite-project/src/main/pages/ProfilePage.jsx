@@ -1,6 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
-import { useCurrentUser } from "main/utils/currentUser";
+import { useCurrentUser} from "main/utils/useCurrentUser";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import JsonView from "@uiw/react-json-view";
 

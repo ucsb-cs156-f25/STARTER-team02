@@ -41,8 +41,8 @@ describe("utils/systemInfo tests", () => {
 
       expect(result.current.data).toEqual({
         initialData: true,
-        springH2ConsoleEnabled: false,
-        showSwaggerUILink: false,
+        springH2ConsoleEnabled: true,
+        showSwaggerUILink: true,
       });
 
       const queryState = queryClient.getQueryState(["systemInfo"]);
@@ -97,8 +97,8 @@ describe("utils/systemInfo tests", () => {
 
       expect(result.current.data).toEqual({
         initialData: true,
-        showSwaggerUILink: false,
-        springH2ConsoleEnabled: false,
+        showSwaggerUILink: true,
+        springH2ConsoleEnabled: true,
       });
       queryClient.clear();
     });

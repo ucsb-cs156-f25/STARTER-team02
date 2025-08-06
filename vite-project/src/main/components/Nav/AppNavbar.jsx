@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router";
-import { hasRole } from "main/utils/currentUser";
+import { hasRole } from "main/utils/useCurrentUser";
 import AppNavbarLocalhost from "main/components/Nav/AppNavbarLocalhost";
 
 
