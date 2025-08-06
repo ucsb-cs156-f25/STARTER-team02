@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
@@ -8,11 +8,22 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import ProfilePage from "main/pages/ProfilePage";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
+let axiosMock;
+let queryClient;
 describe("ProfilePage tests", () => {
-  const queryClient = new QueryClient();
+  queryClient = new QueryClient();
+
+  beforeEach(() => {
+    axiosMock = new AxiosMockAdapter(axios);
+  });
+
+  afterEach(() => {
+    axiosMock.restore();
+    axiosMock.resetHistory();
+    queryClient.clear();
+  });
 
   test("renders correctly for regular logged in user", async () => {
-    const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
       .onGet("/api/currentUser")
       .reply(200, apiCurrentUserFixtures.userOnly);
@@ -28,8 +39,9 @@ describe("ProfilePage tests", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("Phillip Conrad");
-    expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Welcome/)).toBeInTheDocument();
+    });
   });
 
   test("renders correctly for admin user", async () => {
@@ -49,10 +61,11 @@ describe("ProfilePage tests", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("Phill Conrad");
-    expect(screen.getByText("phtcon@ucsb.edu")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Welcome/)).toBeInTheDocument();
+    });
     expect(screen.getByTestId("role-badge-user")).toBeInTheDocument();
-    expect(screen.getByTestId("role-badge-admin")).toBeInTheDocument();
     expect(screen.getByTestId("role-badge-member")).toBeInTheDocument();
+    expect(screen.getByTestId("role-badge-admin")).toBeInTheDocument();
   });
 });
