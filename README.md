@@ -28,7 +28,7 @@ after completing your own.
 
 # Versions
 * Java: 21
-* node: 22.14.0
+* node: 22.18.0
 See [docs/versions.md](docs/versions.md) for more information on upgrading versions.
 
 # Brief overview of starter code 

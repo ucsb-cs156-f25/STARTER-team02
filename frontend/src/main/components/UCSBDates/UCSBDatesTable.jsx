@@ -13,7 +13,7 @@ export default function UCSBDatesTable({ dates, currentUser }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdates/edit/${cell.row.values.id}`);
+    navigate(`/ucsbdates/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -32,20 +32,20 @@ export default function UCSBDatesTable({ dates, currentUser }) {
 
   const columns = [
     {
-      Header: "id",
-      accessor: "id", // accessor is the "key" in the data
+      header: "id",
+      accessorKey: "id", // accessor is the "key" in the data
     },
     {
-      Header: "QuarterYYYYQ",
-      accessor: "quarterYYYYQ",
+      header: "QuarterYYYYQ",
+      accessorKey: "quarterYYYYQ",
     },
     {
-      Header: "Name",
-      accessor: "name",
+      header: "Name",
+      accessorKey: "name",
     },
     {
-      Header: "Date",
-      accessor: "localDateTime",
+      header: "Date",
+      accessorKey: "localDateTime",
     },
   ];
 
