@@ -14,7 +14,7 @@ vi.mock("react-toastify", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,
-    toast: vi.fn((x) => mockToast(x)), 
+    toast: vi.fn((x) => mockToast(x)),
   };
 });
 
@@ -34,11 +34,12 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
+let axiosMock;
 describe("RestaurantEditPage tests", () => {
   describe("when the backend doesn't return data", () => {
-    const axiosMock = new AxiosMockAdapter(axios);
 
     beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
       axiosMock.reset();
       axiosMock.resetHistory();
       axiosMock
@@ -48,6 +49,13 @@ describe("RestaurantEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock.onGet("/api/restaurants", { params: { id: 17 } }).timeout();
+    });
+
+    afterEach(() => {
+      mockToast.mockClear();
+      mockNavigate.mockClear();
+      axiosMock.restore();
+      axiosMock.resetHistory();
     });
 
     const queryClient = new QueryClient();
@@ -68,9 +76,9 @@ describe("RestaurantEditPage tests", () => {
   });
 
   describe("tests where backend is working normally", () => {
-    const axiosMock = new AxiosMockAdapter(axios);
 
     beforeEach(() => {
+      axiosMock = new AxiosMockAdapter(axios);
       axiosMock.reset();
       axiosMock.resetHistory();
       axiosMock
@@ -89,6 +97,13 @@ describe("RestaurantEditPage tests", () => {
         name: "Freebirds World Burrito",
         description: "Really big Burritos",
       });
+    });
+
+    afterEach(() => {
+      mockToast.mockClear();
+      mockNavigate.mockClear();
+      axiosMock.restore();
+      axiosMock.resetHistory();
     });
 
     const queryClient = new QueryClient();
