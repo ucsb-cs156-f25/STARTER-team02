@@ -8,26 +8,25 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockToast = jest.fn();
-jest.mock("react-toastify", () => {
-  const originalModule = jest.requireActual("react-toastify");
+const mockToast = vi.fn();
+vi.mock("react-toastify", async (importOriginal) => {
+  const originalModule = await importOriginal();
   return {
-    __esModule: true,
     ...originalModule,
-    toast: (x) => mockToast(x),
+    toast: vi.fn((x) => mockToast(x)), 
   };
 });
 
-const mockNavigate = jest.fn();
-jest.mock("react-router", () => {
-  const originalModule = jest.requireActual("react-router");
+
+const mockNavigate = vi.fn();
+vi.mock("react-router", async (importOriginal) => {
+  const originalModule = await importOriginal();
   return {
-    __esModule: true,
     ...originalModule,
-    Navigate: (x) => {
+    Navigate: vi.fn((x) => {
       mockNavigate(x);
       return null;
-    },
+    }),
   };
 });
 

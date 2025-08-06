@@ -7,12 +7,14 @@ import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockedNavigate = jest.fn();
-
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useNavigate: () => mockedNavigate,
-}));
+const mockedNavigate = vi.fn();
+vi.mock("react-router", async () => {
+  const originalModule = await vi.importActual("react-router");
+  return {
+    ...originalModule,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 describe("UserTable tests", () => {
   const queryClient = new QueryClient();

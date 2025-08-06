@@ -5,15 +5,20 @@ import {
   apiCurrentUserFixtures,
   currentUserFixtures,
 } from "fixtures/currentUserFixtures";
-import mockConsole from "jest-mock-console";
+import mockConsole from "tests/testutils/mockConsole";
 import { useNavigate } from "react-router";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-jest.mock("react-router");
-const { MemoryRouter } = jest.requireActual("react-router");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
+  return {
+    ...actual,
+    MemoryRouter: actual.MemoryRouter,
+  };
+});
 
 let axiosMock;
 describe("utils/currentUser tests", () => {
@@ -198,7 +203,7 @@ describe("utils/currentUser tests", () => {
       const axiosMock = new AxiosMockAdapter(axios);
       axiosMock.onPost("/logout").reply(200);
 
-      const navigateSpy = jest.fn();
+      const navigateSpy = vi.fn();
       useNavigate.mockImplementation(() => navigateSpy);
 
       const resetQueriesSpy = jest.spyOn(queryClient, "resetQueries");

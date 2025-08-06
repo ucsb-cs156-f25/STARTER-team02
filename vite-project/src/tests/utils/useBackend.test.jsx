@@ -5,17 +5,17 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 
-jest.mock("react-router");
+vi.mock("react-router");
 
-const mockToast = jest.fn();
-jest.mock("react-toastify", () => {
-  const originalModule = jest.requireActual("react-toastify");
+const mockToast = vi.fn();
+vi.mock("react-toastify", async (importOriginal) => {
+  const originalModule = await importOriginal();
   return {
-    __esModule: true,
     ...originalModule,
-    toast: (x) => mockToast(x),
+    toast: vi.fn((x) => mockToast(x)), 
   };
 });
+
 
 describe("utils/useBackend tests", () => {
   beforeEach(() => {
@@ -148,7 +148,7 @@ describe("utils/useBackend tests", () => {
         },
       });
 
-      const onSuccess = jest.fn().mockImplementation((ucsbDate) => {
+      const onSuccess = vi.fn().mockImplementation((ucsbDate) => {
         mockToast(
           `New ucsbDate Created - id: ${ucsbDate.id} name: ${ucsbDate.name}`,
         );
@@ -205,7 +205,7 @@ describe("utils/useBackend tests", () => {
         },
       });
 
-      const onSuccess = jest.fn().mockImplementation((ucsbDate) => {
+      const onSuccess = vi.fn().mockImplementation((ucsbDate) => {
         mockToast(
           `New ucsbDate Created - id: ${ucsbDate.id} name: ${ucsbDate.name}`,
         );

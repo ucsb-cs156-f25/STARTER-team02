@@ -17,7 +17,7 @@ describe("OurTable tests", () => {
     },
   ];
 
-  const clickMeCallback = jest.fn();
+  const clickMeCallback = vi.fn();
 
   const columns = [
     {

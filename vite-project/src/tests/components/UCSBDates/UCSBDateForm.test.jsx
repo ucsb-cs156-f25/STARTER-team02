@@ -3,12 +3,14 @@ import UCSBDateForm from "main/components/UCSBDates/UCSBDateForm";
 import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures";
 import { BrowserRouter as Router } from "react-router";
 
-const mockedNavigate = jest.fn();
-
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useNavigate: () => mockedNavigate,
-}));
+const mockedNavigate = vi.fn();
+vi.mock("react-router", async () => {
+  const originalModule = await vi.importActual("react-router");
+  return {
+    ...originalModule,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 describe("UCSBDateForm tests", () => {
   test("renders correctly", async () => {
@@ -67,7 +69,7 @@ describe("UCSBDateForm tests", () => {
   });
 
   test("No Error messsages on good input", async () => {
-    const mockSubmitAction = jest.fn();
+    const mockSubmitAction = vi.fn();
 
     render(
       <Router>

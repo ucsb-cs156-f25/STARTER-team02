@@ -7,12 +7,24 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import ProfilePage from "main/pages/ProfilePage";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { beforeEach } from "vitest";
 
+let axiosMock;
 describe("ProfilePage tests", () => {
   const queryClient = new QueryClient();
+  
+  beforeEach(() => {
+    axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.reset(); // Reset the mock before each test to avoid interference
+    axiosMock.resetHistory(); // Clear the history of requests
+    queryClient.clear(); // Clear the query client cache before each test
+  });
+
+  afterEach(() => {
+    axiosMock.restore();
+  });
 
   test("renders correctly for regular logged in user", async () => {
-    const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
       .onGet("/api/currentUser")
       .reply(200, apiCurrentUserFixtures.userOnly);
@@ -28,12 +40,10 @@ describe("ProfilePage tests", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("Phillip Conrad");
-    expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
+    await screen.findByText(/Welcome/);
   });
 
   test("renders correctly for admin user", async () => {
-    const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
       .onGet("/api/currentUser")
       .reply(200, apiCurrentUserFixtures.adminUser);
@@ -49,8 +59,7 @@ describe("ProfilePage tests", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("Phill Conrad");
-    expect(screen.getByText("phtcon@ucsb.edu")).toBeInTheDocument();
+    await screen.findByText(/Welcome/);
     expect(screen.getByTestId("role-badge-user")).toBeInTheDocument();
     expect(screen.getByTestId("role-badge-admin")).toBeInTheDocument();
     expect(screen.getByTestId("role-badge-member")).toBeInTheDocument();

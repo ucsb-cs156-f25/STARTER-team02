@@ -6,12 +6,14 @@ import { restaurantFixtures } from "fixtures/restaurantFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const mockedNavigate = jest.fn();
-
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useNavigate: () => mockedNavigate,
-}));
+const mockedNavigate = vi.fn();
+vi.mock("react-router", async () => {
+  const originalModule = await vi.importActual("react-router");
+  return {
+    ...originalModule,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 describe("RestaurantForm tests", () => {
   const queryClient = new QueryClient();

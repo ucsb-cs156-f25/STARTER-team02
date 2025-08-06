@@ -11,6 +11,9 @@ export default defineConfig({
     }),
   ],
   test: {
+    globals: true, // makes describe, it, expect a  vailable globally
+    environment: 'jsdom', // makes it possible to use DOM APIs
+    setupFiles: './vitest.setup.js', 
     coverage: {
       enabled: true, // This enables coverage collection, equivalent to `check-coverage`
       provider: 'v8', // Recommended for performance, but you can also use 'istanbul'
@@ -30,9 +33,11 @@ export default defineConfig({
     alias: {
       "main": path.resolve(__dirname, "./src/main"),
       "fixtures": path.resolve(__dirname, "./src/fixtures"),
+      "tests": path.resolve(__dirname, "./src/tests"),
     }
   },
   server: {
     port: 3000,
-  }
+  },
+
 });

@@ -2,7 +2,7 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
-import mockConsole from "jest-mock-console";
+import mockConsole from "tests/testutils/mockConsole";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
@@ -10,15 +10,15 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockToast = jest.fn();
-jest.mock("react-toastify", () => {
-  const originalModule = jest.requireActual("react-toastify");
+const mockToast = vi.fn();
+vi.mock("react-toastify", async (importOriginal) => {
+  const originalModule = await importOriginal();
   return {
-    __esModule: true,
     ...originalModule,
-    toast: (x) => mockToast(x),
+    toast: vi.fn((x) => mockToast(x)), 
   };
 });
+
 
 describe("RestaurantIndexPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
