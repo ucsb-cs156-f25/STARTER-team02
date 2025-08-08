@@ -7,7 +7,7 @@ import {
   onDeleteSuccess,
 } from "main/utils/UCSBDateUtils";
 import { useNavigate } from "react-router";
-import { hasRole } from "main/utils/currentUser";
+import { hasRole } from "main/utils/useCurrentUser";
 
 export default function UCSBDatesTable({ dates, currentUser }) {
   const navigate = useNavigate();
