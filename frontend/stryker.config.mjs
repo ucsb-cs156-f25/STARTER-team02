@@ -13,5 +13,10 @@ const config = {
   testRunner_comment:
     "Take a look at https://stryker-mutator.io/docs/stryker-js/vitest-runner for information about the vitest plugin.",
   coverageAnalysis: "perTest",
+  thresholds: {
+    high: 100,
+    low: 100,
+    break: 100
+  }
 };
 export default config;
