@@ -5,10 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 // Import the vitest plugin
-import vitest from 'eslint-plugin-vitest'
+import vitest from '@vitest/eslint-plugin'
 
 export default defineConfig([
-  globalIgnores(['dist', '.stryker-tmp/', '.storybook/', 'build', 'coverage', 'node_modules',  'public/mockServiceWorker.js']),
+  globalIgnores(['dist', '.stryker-tmp/', '.storybook/', 'build', 'coverage', 'node_modules',  'public/mockServiceWorker.js', 'storybook-static/']),
   {
     files: ['src/**/*.{js,jsx}'],
     extends: [
