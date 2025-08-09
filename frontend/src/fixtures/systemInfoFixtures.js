@@ -13,6 +13,11 @@ const systemInfoFixtures = {
     springH2ConsoleEnabled: false,
     showSwaggerUILink: false,
   },
+  initialData: {
+    initialData: true,
+    springH2ConsoleEnabled: true,
+    showSwaggerUILink: true,
+  },
 };
 
 export { systemInfoFixtures };
