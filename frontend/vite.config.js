@@ -29,6 +29,7 @@ export default defineConfig({
     globals: true, // makes describe, it, expect available globally
     environment: 'jsdom', // makes it possible to use DOM APIs
     setupFiles: './vitest.setup.js',
+      include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     coverage: {
       enabled: true, // This enables coverage collection, equivalent to `check-coverage`
       provider: 'v8', // Recommended for performance, but you can also use 'istanbul'

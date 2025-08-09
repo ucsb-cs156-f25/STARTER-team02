@@ -122,6 +122,8 @@ describe("utils/currentUser tests", () => {
       // The hook's returned data will be the initialData because the query failed.
       expect(result.current.loggedIn).toBe(false);
       expect(result.current.root).toBe(null);
+      expect(result.current.initialData).toBe(true);
+      expect(queryClient.getQueryData(["current user"])).toBeTruthy();
     });
   });
 
