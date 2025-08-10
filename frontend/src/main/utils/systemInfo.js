@@ -17,6 +17,8 @@ export function useSystemInfo() {
       initialData: true,
       springH2ConsoleEnabled: true,
       showSwaggerUILink: true,
+      oauthLogin: "/oauth2/authorization/google",
+      sourceRepo: "https://github.com/ucsb-cs156-f25/STARTER-team02",
     },
   });
 }
