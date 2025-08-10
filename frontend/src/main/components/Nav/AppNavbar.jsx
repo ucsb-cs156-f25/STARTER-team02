@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router";
-import { hasRole } from "main/utils/currentUser";
+import { hasRole } from "main/utils/useCurrentUser";
 import AppNavbarLocalhost from "main/components/Nav/AppNavbarLocalhost";
 
 export default function AppNavbar({
@@ -10,12 +10,14 @@ export default function AppNavbar({
   currentUrl = window.location.href,
 }) {
   var oauthLogin = systemInfo?.oauthLogin || "/oauth2/authorization/google";
+
   return (
     <>
       {(currentUrl.startsWith("http://localhost:3000") ||
         currentUrl.startsWith("http://127.0.0.1:3000")) && (
         <AppNavbarLocalhost url={currentUrl} />
       )}
+
       <Navbar
         expand="xl"
         variant="dark"

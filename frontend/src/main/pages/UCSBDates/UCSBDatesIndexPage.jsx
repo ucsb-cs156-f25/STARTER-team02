@@ -4,7 +4,7 @@ import { useBackend } from "main/utils/useBackend";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import UCSBDatesTable from "main/components/UCSBDates/UCSBDatesTable";
 import { Button } from "react-bootstrap";
-import { useCurrentUser, hasRole } from "main/utils/currentUser";
+import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 
 export default function UCSBDatesIndexPage() {
   const currentUser = useCurrentUser();

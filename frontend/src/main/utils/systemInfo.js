@@ -15,8 +15,8 @@ export function useSystemInfo() {
     },
     initialData: {
       initialData: true,
-      springH2ConsoleEnabled: false,
-      showSwaggerUILink: false,
+      springH2ConsoleEnabled: true,
+      showSwaggerUILink: true,
     },
   });
 }

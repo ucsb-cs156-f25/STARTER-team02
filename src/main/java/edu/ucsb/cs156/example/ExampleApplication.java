@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -47,6 +49,19 @@ public class ExampleApplication {
       log.info("development mode");
       log.info("developmentApplicationRunner completed");
     };
+  }
+
+  /**
+   *  See: https://www.baeldung.com/spring-git-information
+   *  @return a propertySourcePlaceholderConfigurer for git.properties
+   */
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+    PropertySourcesPlaceholderConfigurer propsConfig = new PropertySourcesPlaceholderConfigurer();
+    propsConfig.setLocation(new ClassPathResource("git.properties"));
+    propsConfig.setIgnoreResourceNotFound(true);
+    propsConfig.setIgnoreUnresolvablePlaceholders(true);
+    return propsConfig;
   }
 
    /**
