@@ -37,11 +37,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: 'frontend/package.json'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
 
-      - run: npm ci
+      - name: install dependencies for all platforms
         working-directory: ./frontend
+        run: |
+           rm -rf node_modules
+           rm -f package_lock.json   
+           npm_config_platform=all npm install
+        
       - run: npm test
         working-directory: ./frontend
       - name: Upload coverage report to Artifacts
