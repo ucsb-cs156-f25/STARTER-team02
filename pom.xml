@@ -537,7 +537,7 @@
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>ci</arguments>
+                  <arguments>install</arguments>
                   <environmentVariables>
                     <npm_config_platform>all</npm_config_platform>
                   </environmentVariables>
@@ -580,7 +580,7 @@
           <plugin>
             <groupId>com.github.eirslett</groupId>
             <artifactId>frontend-maven-plugin</artifactId>
-            <version>1.12.1</version>
+            <version>1.15.1</version>
             <configuration>
               <workingDirectory>frontend</workingDirectory>
               <installDirectory>${project.build.directory}</installDirectory>
@@ -601,7 +601,10 @@
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>ci</arguments>
+                  <arguments>install</arguments>
+                  <environmentVariables>
+                    <npm_config_platform>all</npm_config_platform>
+                  </environmentVariables>
                 </configuration>
               </execution>
               <execution>
