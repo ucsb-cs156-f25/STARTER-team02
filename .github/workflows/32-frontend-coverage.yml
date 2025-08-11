@@ -42,7 +42,7 @@ jobs:
         working-directory: ./frontend
         run: |
            rm -rf node_modules
-           rm package_lock.json   
+           rm -f package_lock.json   
            npm_config_platform=all npm install
         
       - run: npm test
