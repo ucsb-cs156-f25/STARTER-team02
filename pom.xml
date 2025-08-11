@@ -424,57 +424,57 @@
                     <condition property="frontend.skip" value="false" else="true">
                       <and>
                         <!-- Frontend directory must exist -->
-                        <available file="${project.basedir}/frontend" type="dir"/>
+                        <available file="${project.basedir}/frontend" type="dir" />
                         <or>
                           <!-- Check if node_modules doesn't exist -->
                           <not>
-                            <available file="${project.basedir}/frontend/node_modules" type="dir"/>
+                            <available file="${project.basedir}/frontend/node_modules" type="dir" />
                           </not>
                           <!-- Check if build directory doesn't exist -->
                           <not>
-                            <available file="${project.basedir}/frontend/build" type="dir"/>
+                            <available file="${project.basedir}/frontend/build" type="dir" />
                           </not>
                           <!-- Check if output build exists -->
                           <not>
-                            <available file="${project.build.outputDirectory}/public" type="dir"/>
+                            <available file="${project.build.outputDirectory}/public" type="dir" />
                           </not>
                           <!-- Check if package.json exists and is newer than node_modules directory -->
                           <and>
-                            <available file="${project.basedir}/frontend/package.json"/>
-                            <available file="${project.basedir}/frontend/node_modules" type="dir"/>
+                            <available file="${project.basedir}/frontend/package.json" />
+                            <available file="${project.basedir}/frontend/node_modules" type="dir" />
                             <not>
                               <uptodate targetfile="${project.basedir}/frontend/node_modules">
-                                <srcfiles file="${project.basedir}/frontend/package.json"/>
+                                <srcfiles file="${project.basedir}/frontend/package.json" />
                               </uptodate>
                             </not>
                           </and>
                           <!-- Check if package-lock.json exists and is newer than node_modules -->
                           <and>
-                            <available file="${project.basedir}/frontend/package-lock.json"/>
-                            <available file="${project.basedir}/frontend/node_modules" type="dir"/>
+                            <available file="${project.basedir}/frontend/package-lock.json" />
+                            <available file="${project.basedir}/frontend/node_modules" type="dir" />
                             <not>
                               <uptodate targetfile="${project.basedir}/frontend/node_modules">
-                                <srcfiles file="${project.basedir}/frontend/package-lock.json"/>
+                                <srcfiles file="${project.basedir}/frontend/package-lock.json" />
                               </uptodate>
                             </not>
                           </and>
                           <!-- Check if source files are newer than build directory -->
                           <and>
-                            <available file="${project.basedir}/frontend/src" type="dir"/>
-                            <available file="${project.basedir}/frontend/build" type="dir"/>
+                            <available file="${project.basedir}/frontend/src" type="dir" />
+                            <available file="${project.basedir}/frontend/build" type="dir" />
                             <not>
                               <uptodate targetfile="${project.basedir}/frontend/build">
-                                <srcfiles dir="${project.basedir}/frontend/src" includes="**/*"/>
+                                <srcfiles dir="${project.basedir}/frontend/src" includes="**/*" />
                               </uptodate>
                             </not>
                           </and>
                           <!-- Check if build files are newer than public directory -->
                           <and>
-                            <available file="${project.build.outputDirectory}/public" type="dir"/>
-                            <available file="${project.basedir}/frontend/build" type="dir"/>
+                            <available file="${project.build.outputDirectory}/public" type="dir" />
+                            <available file="${project.basedir}/frontend/build" type="dir" />
                             <not>
                               <uptodate targetfile="${project.build.outputDirectory}/public">
-                                <srcfiles dir="${project.basedir}/frontend/build" includes="**/*"/>
+                                <srcfiles dir="${project.basedir}/frontend/build" includes="**/*" />
                               </uptodate>
                             </not>
                           </and>
@@ -484,9 +484,9 @@
 
                     <!-- Log the decision -->
                     <condition property="build.message"
-                               value="Frontend changes detected - will rebuild"
-                               else="No frontend changes detected - skipping npm build">
-                      <equals arg1="${frontend.skip}" arg2="false"/>
+                      value="Frontend changes detected - will rebuild"
+                      else="No frontend changes detected - skipping npm build">
+                      <equals arg1="${frontend.skip}" arg2="false" />
                     </condition>
                     <echo message="${build.message}" level="info" />
                   </target>
@@ -537,7 +537,10 @@
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>ci</arguments>
+                  <arguments>install</arguments>
+                  <environmentVariables>
+                    <npm_config_platform>all</npm_config_platform>
+                  </environmentVariables>
                 </configuration>
               </execution>
               <execution>
@@ -577,7 +580,7 @@
           <plugin>
             <groupId>com.github.eirslett</groupId>
             <artifactId>frontend-maven-plugin</artifactId>
-            <version>1.12.1</version>
+            <version>1.15.1</version>
             <configuration>
               <workingDirectory>frontend</workingDirectory>
               <installDirectory>${project.build.directory}</installDirectory>
@@ -598,7 +601,10 @@
                   <goal>npm</goal>
                 </goals>
                 <configuration>
-                  <arguments>ci</arguments>
+                  <arguments>install</arguments>
+                  <environmentVariables>
+                    <npm_config_platform>all</npm_config_platform>
+                  </environmentVariables>
                 </configuration>
               </execution>
               <execution>
