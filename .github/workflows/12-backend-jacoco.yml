@@ -5,8 +5,9 @@ name: "12-backend-jacoco: Java Test Coverage (Jacoco)"
 
 permissions:
   id-token: write
-  contents: read    # (or whatever else you need)
-
+  contents: write
+  pages: write
+  pull-requests: read
 
 on:
   workflow_dispatch:

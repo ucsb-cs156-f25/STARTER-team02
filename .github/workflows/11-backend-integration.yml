@@ -6,7 +6,9 @@ name: "11-backend-integration: Java Integration tests"
 
 permissions:
   id-token: write
-  contents: read    # (or whatever else you need)
+  contents: write
+  pages: write
+  pull-requests: read
 
 on:
   workflow_dispatch:

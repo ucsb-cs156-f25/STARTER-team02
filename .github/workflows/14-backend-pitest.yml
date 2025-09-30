@@ -5,7 +5,9 @@ name: "14-backend-pitest: Java Mutation Testing (Pitest)"
 
 permissions:
   id-token: write
-  contents: read    # (or whatever else you need)
+  contents: write
+  pages: write
+  pull-requests: read
 
 on:
   workflow_dispatch:

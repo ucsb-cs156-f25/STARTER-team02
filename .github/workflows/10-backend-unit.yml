@@ -5,7 +5,10 @@ name: "10-backend-unit: Java Unit tests"
 
 permissions:
   id-token: write
-  contents: read    # (or whatever else you need)
+  contents: write
+  pages: write
+  pull-requests: read
+
 
 on:
   workflow_dispatch:
