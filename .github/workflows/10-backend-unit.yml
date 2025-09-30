@@ -8,7 +8,7 @@ permissions:
   contents: write
   pages: write
   pull-requests: read
-
+  actions: read
 
 on:
   workflow_dispatch:
