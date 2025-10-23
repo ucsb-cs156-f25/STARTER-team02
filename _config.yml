@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/STARTER-team02
 owner: ucsb-cs156-f25
 repo_name: STARTER-team02
-pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-git-code-format","number":24,"title":"pc - git code format, and replace deprecated MockBean with MockitoBean","url":"https://github.com/ucsb-cs156-f25/STARTER-team02/pull/24"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-fixMockitoBean","number":25,"title":"pc - fix deprecated MockBean, replacing with MockitoBean","url":"https://github.com/ucsb-cs156-f25/STARTER-team02/pull/25"},{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-git-code-format","number":24,"title":"pc - git code format, and replace deprecated MockBean with MockitoBean","url":"https://github.com/ucsb-cs156-f25/STARTER-team02/pull/24"}]
