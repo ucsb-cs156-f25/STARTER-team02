@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/STARTER-team02
 owner: ucsb-cs156-f25
 repo_name: STARTER-team02
-pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-add-workflow-to-check-db-migrations","number":87,"title":"Pc add workflow to check db migrations","url":"https://github.com/ucsb-cs156-f25/STARTER-team02/pull/87"}]
+pull_requests: []
